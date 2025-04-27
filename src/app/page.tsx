@@ -5,7 +5,7 @@ export default function Home() {
     <div className="relative min-h-screen w-full bg-black overflow-hidden">
       {/* Imagen de fondo */}
       <Image
-        src="/fondo-home.png" // <-- nombre de la nueva imagen de fondo
+        src="/fondo-home.png"
         alt="Imagen de cultivo"
         layout="fill"
         objectFit="cover"

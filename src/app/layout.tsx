@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import PageTransition from "@/components/PageTransition";
 import { ReactNode } from "react";
 import "./globals.css";
 import Providers from "./providers";
@@ -14,9 +15,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="es">
       <body className="flex flex-col min-h-screen">
         <Providers>
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
+          <PageTransition>
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </PageTransition>
         </Providers>
       </body>
     </html>
