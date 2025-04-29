@@ -46,9 +46,9 @@ export default function ComoTrabajaPage() {
             ].map((item) => (
               <div
                 key={item.numero}
-                className="flex items-start gap-4 bg-green-800 rounded-xl p-4 shadow-lg"
+                className="flex items-start gap-4 bg-green-800 bg-opacity-70 rounded-xl p-4 shadow-lg"
               >
-                <div className="bg-green-500 text-black font-bold rounded-full w-10 h-10 flex items-center justify-center">
+                <div className="bg-green-500 text-black font-bold rounded-full w-10 h-10 flex items-center justify-center bg-opacity-80">
                   {item.numero}
                 </div>
                 <div>
@@ -61,12 +61,12 @@ export default function ComoTrabajaPage() {
 
           {/* Descripción lateral */}
           <div className="max-w-md text-justify flex flex-col justify-between">
-            <p className="mb-6">
+            <p className="mb-6 text-lg leading-relaxed">
               Imaginá tener en la palma de tu mano una app que te ayuda a
               conocer al instante lo que necesitan tus plantas para crecer
               saludables y radiantes. Con Soilscope, la tecnología se convierte
-              en la aliada perfecta para transformar tu espacio en un oasis
-              verde.
+              en la aliada perfecta para transformar tu espacio en un{" "}
+              <span className="text-green-400 font-semibold">oasis verde.</span>
             </p>
             {/* Botón de contacto */}
             <a

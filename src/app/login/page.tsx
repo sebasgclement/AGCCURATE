@@ -115,7 +115,7 @@ export default function LoginPage() {
 
         <div className="text-center text-xs">
           <Link
-            href="/olvide-mi-clave"
+            href="/restablecer-clave"
             className="text-white/60 hover:underline"
           >
             ¿Olvidaste tu contraseña? Presiona aquí
