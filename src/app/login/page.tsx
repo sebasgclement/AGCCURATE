@@ -25,7 +25,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-green-900 text-white px-6 py-12 gap-12">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-green-950 text-white px-6 py-12 gap-12">
       {/* Izquierda - Texto + Imagen */}
       <div className="flex-1 max-w-md w-full text-center md:text-left space-y-6 animate-fade-in">
         <div className="flex flex-col justify-between h-full">

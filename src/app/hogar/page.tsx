@@ -4,9 +4,18 @@ import Image from "next/image";
 
 export default function HogarPage() {
   return (
-    <main className="min-h-screen bg-green-900 text-white flex flex-col items-center px-4 py-10">
+    <main className="relative min-h-screen bg-green-950 text-white flex flex-col items-center px-4 pt-28 pb-10 overflow-hidden">
+      {/* Fondo de plantas desenfocado */}
+      <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
+        <Image
+          src="/fondo-plantas.png"
+          alt="Fondo de plantas"
+          fill
+          className="object-cover"
+        />
+      </div>
       {/* Contenedor principal */}
-      <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 px-4">
+      <div className="relative z-10 flex flex-col-reverse md:flex-row items-center justify-center gap-10 px-4">
         <div className="max-w-md text-justify">
           {/* Títulos principales */}
           <div className="text-center max-w-4xl px-4">
