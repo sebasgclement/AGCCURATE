@@ -94,18 +94,7 @@ export default function Header() {
                   </div>
                 </Link>
 
-                <Link
-                  href="/hogar/como-trabaja"
-                  className="flex items-start gap-4 hover:bg-white/10 p-3 rounded transition"
-                >
-                  <FaLightbulb className="text-xl mt-1 text-yellow-300" />
-                  <div>
-                    <div className="font-semibold">Para el Hogar 1.2</div>
-                    <div className="text-sm text-white/90">
-                      Versiones mejoradas para tu comodidad.
-                    </div>
-                  </div>
-                </Link>
+                
 
                 <Link
                   href="/agro"

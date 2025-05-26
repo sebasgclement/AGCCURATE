@@ -7,61 +7,37 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <main className="relative min-h-screen bg-green-950 text-white pt-[7rem] overflow-hidden">
-      {/* Fondo de plantas desenfocado */}
-      <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
+    <main className="flex flex-col md:flex-row h-screen w-full">
+      {/* Imagen a la izquierda */}
+      <div className="relative w-full md:w-1/2 h-64 md:h-full">
         <Image
-          src="/fondo-plantas.png"
-          alt="Fondo de plantas"
+          src="/cartel-agccurate.png"
+          alt="Cartel AGCCURATE"
           fill
           className="object-cover"
         />
       </div>
 
-      {/* Contenedor principal 50/50 */}
-      <div className="relative z-10 flex flex-col md:flex-row h-[calc(100vh-7rem)]">
-        {/* Imagen grande a la izquierda */}
-        <motion.div
-          className="md:w-1/2 w-full h-1/2 md:h-full flex justify-center items-center p-4"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
+      {/* Contenido a la derecha */}
+      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center items-start px-8 py-12 md:py-0">
+        <h2 className="text-4xl md:text-5xl font-semibold text-black leading-snug mb-6">
+          CONTACTE CON SU <span className="text-green-700">TIENDA</span>{" "}
+          <span className="font-black">MÁS CERCANA</span>
+        </h2>
+        <Link
+          href="https://www.google.com/maps/search/tienda+AGCCURATE/"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <div className="w-full h-full relative rounded-3xl overflow-hidden shadow-2xl">
-            <Image
-              src="/cartel-agccurate.png"
-              alt="Cartel AGCCURATE"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </motion.div>
-
-        {/* Texto y botón a la derecha */}
-        <motion.div
-          className="md:w-1/2 w-full h-1/2 md:h-full flex flex-col justify-center items-center md:items-start px-6"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 leading-tight text-center md:text-left">
-            CONTACTE CON SU <span className="text-green-300">TIENDA</span>{" "}
-            <span className="text-white font-black">MÁS CERCANA</span>
-          </h2>
-
-          <Link href="#encuentra-tiendas">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 shadow-lg"
-            >
-              Encontrá la más próxima
-              <ArrowRight className="w-5 h-5" />
-            </motion.button>
-          </Link>
-        </motion.div>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 bg-green-800 hover:bg-green-900 text-white font-semibold py-3 px-6 rounded-full transition duration-300 shadow-md"
+          >
+            Encontrá la más próxima
+            <ArrowRight className="w-5 h-5" />
+          </motion.button>
+        </Link>
       </div>
     </main>
   );
