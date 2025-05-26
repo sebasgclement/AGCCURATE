@@ -68,7 +68,7 @@ export default function Home() {
       </section>
 
       {/* Pausa visual */}
-      <section id="pausa" className="relative z-0 h-48 w-full" />
+      <section id="pausa" className="relative z-0 h-98 w-full" />
 
       {/* Sección Opiniones de Clientes */}
       <section id="opiniones" className="relative z-10 bg-white bg-opacity-90 py-20">

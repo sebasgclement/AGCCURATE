@@ -172,13 +172,6 @@ export default function Header() {
                   Para el Hogar
                 </Link>
                 <Link
-                  href="/hogar/como-trabaja"
-                  className="hover:text-green-300 transition"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Para el Hogar 1.2
-                </Link>
-                <Link
                   href="/agro"
                   className="hover:text-green-300 transition"
                   onClick={() => setIsMobileMenuOpen(false)}

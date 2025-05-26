@@ -83,7 +83,8 @@ export default function HogarPage() {
         </div>
       </section>
 
-      <section id="separador" className="relative z-0 h-48 w-full" />
+      
+      <section id="separador" className="relative z-0 h-98 w-full" />
 
       <section id="como-trabaja" className="relative flex flex-col items-center justify-center w-full min-h-screen py-20 bg-green-950 bg-opacity-90">
         <div className="w-full max-w-6xl px-4">

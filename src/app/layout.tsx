@@ -7,6 +7,8 @@ import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import Providers from "./providers";
+import LayoutWrapper from "@/components/LayoutWrapper";
+
 
 export const metadata = {
   title: "AGCCURATE",
@@ -36,9 +38,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Header />
 
             {/* Solo esta parte hace scroll */}
-            <main className="flex-1 overflow-y-auto">
+            <LayoutWrapper>
               <PageTransition>{children}</PageTransition>
-            </main>
+            </LayoutWrapper>
+
 
             <Footer />
           </div>

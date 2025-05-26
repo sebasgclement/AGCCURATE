@@ -7,9 +7,9 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <main className="flex flex-col md:flex-row h-screen w-full">
+    <main className="flex flex-col md:flex-row h-screen w-full overflow-hidden">
       {/* Imagen a la izquierda */}
-      <div className="relative w-full md:w-1/2 h-64 md:h-full">
+      <div className="relative w-full md:w-1/2 h-[40vh] md:h-full">
         <Image
           src="/cartel-agccurate.png"
           alt="Cartel AGCCURATE"
@@ -19,13 +19,13 @@ export default function ContactPage() {
       </div>
 
       {/* Contenido a la derecha */}
-      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center items-start px-8 py-12 md:py-0">
-        <h2 className="text-4xl md:text-5xl font-semibold text-black leading-snug mb-6">
+      <div className="w-full md:w-1/2 bg-white flex flex-col justify-center items-center md:items-start px-6 py-10 gap-8 text-center md:text-left">
+        <h2 className="text-3xl md:text-5xl font-semibold text-black leading-snug">
           CONTACTE CON SU <span className="text-green-700">TIENDA</span>{" "}
           <span className="font-black">MÁS CERCANA</span>
         </h2>
         <Link
-          href="https://www.google.com/maps/search/tienda+AGCCURATE/"
+          href="https://www.google.com/maps/search/?api=1&query=AGCCURATE"
           target="_blank"
           rel="noopener noreferrer"
         >
