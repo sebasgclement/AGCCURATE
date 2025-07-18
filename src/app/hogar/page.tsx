@@ -15,7 +15,10 @@ export default function HogarPage() {
         />
       </div>
 
-      <section id="hogar" className="relative flex flex-col-reverse md:flex-row items-center justify-center gap-10 min-h-screen py-20 w-full bg-green-950 bg-opacity-90">
+      <section
+        id="hogar"
+        className="relative scroll-mt-24 flex flex-col-reverse md:flex-row items-center justify-center gap-10 min-h-[600px] md:min-h-screen pt-28 md:pt-32 lg:pt-24 xl:pt-20 pb-12 md:pb-20 lg:pb-12 xl:pb-10 w-full bg-green-950 bg-opacity-90"
+      >
         <div className="max-w-md text-justify px-4">
           <div className="text-center max-w-4xl">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -65,28 +68,39 @@ export default function HogarPage() {
             />
           </div>
         </div>
-
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-30 text-center pointer-events-none">
-          <a href="#acerca" aria-label="Scroll hacia abajo" className="flex flex-col items-center animate-bounce text-white pointer-events-auto">
-            <p className="text-sm opacity-80 mb-1">Deslizá para explorar</p>
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </a>
-        </div>
       </section>
 
-      
+      {/* Deslizá para explorar: AHORA FUERA DE LA SECCIÓN PARA EVITAR SOLAPES */}
+      <div className="relative -mt-6 mb-10 z-30 text-center">
+        <a
+          href="#acerca"
+          aria-label="Scroll hacia abajo"
+          className="flex flex-col items-center animate-bounce text-white"
+        >
+          <p className="text-sm opacity-80 mb-1">Deslizá para explorar</p>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </a>
+      </div>
+
       <section id="separador" className="relative z-0 h-98 w-full" />
 
-      <section id="como-trabaja" className="relative flex flex-col items-center justify-center w-full min-h-screen py-20 bg-green-950 bg-opacity-90">
+      <section
+        id="como-trabaja"
+        className="relative flex flex-col items-center justify-center w-full min-h-screen py-20 bg-green-950 bg-opacity-90"
+      >
         <div className="w-full max-w-6xl px-4">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
             ¿Cómo trabaja <span className="text-green-400">Soilscope</span>?
@@ -129,11 +143,14 @@ export default function HogarPage() {
 
             <div className="max-w-md text-justify flex flex-col justify-between flex-1">
               <p className="mb-6 text-lg leading-relaxed">
-                Imaginá tener en la palma de tu mano una app que te ayuda a conocer
-                al instante lo que necesitan tus plantas para crecer saludables y
-                radiantes. Con Soilscope, la tecnología se convierte en la aliada
-                perfecta para transformar tu espacio en un {" "}
-                <span className="text-green-400 font-semibold">oasis verde.</span>
+                Imaginá tener en la palma de tu mano una app que te ayuda a
+                conocer al instante lo que necesitan tus plantas para crecer
+                saludables y radiantes. Con Soilscope, la tecnología se
+                convierte en la aliada perfecta para transformar tu espacio en
+                un{" "}
+                <span className="text-green-400 font-semibold">
+                  oasis verde.
+                </span>
               </p>
               <a
                 href="https://wa.me/5493492325433?text=Hola!%20Estoy%20interesado%20en%20Soilscope%20y%20me%20gustaría%20recibir%20más%20información."

@@ -1,4 +1,4 @@
-import { sendPasswordResetEmail } from "@/app/lib/mail"; // ahora te paso este archivo también
+import { sendPasswordResetEmail } from "@/app/lib/mail";
 import prisma from "@/app/lib/prisma";
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
@@ -16,7 +16,6 @@ export async function POST(req: Request) {
     });
 
     if (!user) {
-      // No revelar si el email existe o no
       return NextResponse.json({
         message:
           "Si el correo existe, recibirás un enlace para restablecer tu contraseña.",
@@ -24,9 +23,8 @@ export async function POST(req: Request) {
     }
 
     const token = randomUUID();
-    const expiresAt = new Date(Date.now() + 1000 * 60 * 60); // 1 hora desde ahora
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60);
 
-    // Guarda el token en la tabla passwordResetToken
     await prisma.passwordResetToken.create({
       data: {
         email,
@@ -35,7 +33,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Envía el email con el enlace
     await sendPasswordResetEmail(email, token);
 
     return NextResponse.json({

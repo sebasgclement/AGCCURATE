@@ -1,11 +1,10 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "@/app/lib/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcryptjs";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
-// ✅ Esta es la exportación que necesitás para el layout
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -20,23 +19,22 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Faltan credenciales");
-        }
+        if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        if (!user || !user.password) {
-          throw new Error("Usuario no encontrado");
-        }
+        if (!user || !user.password) return null;
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) {
-          throw new Error("Contraseña incorrecta");
-        }
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
 
+        if (!isValid) return null;
+
+        // ✅ Devuelvo el usuario completo para que cumpla con AdapterUser
         return user;
       },
     }),
@@ -46,11 +44,21 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.id = user.id;
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+        token.picture = user.image ?? null;
+      }
       return token;
     },
     async session({ session, token }) {
-      if (token?.id && session.user) session.user.id = token.id as string;
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name ?? "";
+        session.user.email = token.email ?? "";
+        session.user.image = token.picture ?? null;
+      }
       return session;
     },
   },
@@ -60,6 +68,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
-
-// ✅ Estas exportaciones son necesarias para la API route
 export { handler as GET, handler as POST };

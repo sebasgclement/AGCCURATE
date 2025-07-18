@@ -8,14 +8,30 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  name          String?
-  email         String   @unique
-  password      String?  // Solo si se registra con email/password
-  image         String?  // Para el login con Google
-  emailVerified DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String           @id @default(cuid())
+  name           String?
+  email          String           @unique
+  password       String?          // Solo si se registra con email/password
+  image          String?          // Para el login con Google
+  emailVerified  DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  // Relación 1 a 1 con perfil
+  profile        UserProfile?
+}
+
+model UserProfile {
+  userId          String           @id
+  fechaNacimiento DateTime?
+  telefono        String?
+  genero          String?
+  domicilio       String?
+  ciudad          String?
+  provincia       String?
+  pais            String?
+
+  user            User             @relation(fields: [userId], references: [id])
 }
 
 model PasswordResetToken {
@@ -24,7 +40,3 @@ model PasswordResetToken {
   token     String   @unique
   expiresAt DateTime
 }
-
-
-
-

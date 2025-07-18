@@ -1,17 +1,39 @@
-// LoginPage.tsx
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const errorParam = searchParams.get("error");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const showToast = (message: string, type: "success" | "error") => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  useEffect(() => {
+    if (errorParam) {
+      const message =
+        errorParam === "CredentialsSignin"
+          ? "Email o contraseña incorrectos"
+          : "Error desconocido al iniciar sesión";
+      showToast(message, "error");
+    }
+  }, [errorParam]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,18 +43,33 @@ export default function LoginPage() {
       password,
     });
 
-    if (res?.ok) router.push("/");
-    else alert("Error al iniciar sesión");
+    if (res?.ok) {
+      showToast("Sesión iniciada con éxito", "success");
+      setTimeout(() => router.push("/"), 1500);
+    } else {
+      showToast("Email o contraseña incorrectos", "error");
+    }
   };
 
   return (
     <div className="relative flex items-center justify-center min-h-screen px-4 pt-20 text-white bg-[url('/fondo-plantas.png')] bg-cover bg-center">
-      {/* Fondo oscuro con transparencia */}
       <div className="absolute inset-0 bg-black/60 z-0 backdrop-blur-sm"></div>
 
-      {/* Contenido principal */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 px-6 py-3 rounded-lg shadow-lg text-sm font-medium transition-colors
+              ${toast.type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"}`}
+          >
+            {toast.message}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="relative z-10 flex gap-12 flex-wrap md:flex-nowrap">
-        {/* Izquierda - Texto + Imagen */}
         <div className="flex-1 max-w-md w-full text-center md:text-left space-y-6 animate-fade-in">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold">¿POR QUÉ CREAR UNA CUENTA?</h2>
@@ -53,7 +90,6 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Derecha - Formulario */}
         <div className="flex-1 max-w-md w-full bg-white/20 border border-white/30 rounded-2xl p-8 shadow-lg backdrop-blur-md space-y-6 animate-fade-in delay-200">
           <h1 className="text-3xl font-bold text-center">Iniciar Sesión</h1>
 

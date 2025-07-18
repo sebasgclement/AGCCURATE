@@ -1,9 +1,9 @@
-import prisma from "@/app/lib/prisma"; // Ajustá este import si tu prisma está en otra ruta
+import prisma from "@/app/lib/prisma";
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
-import { Resend } from "resend"; // Vamos a usar Resend para mandar emails
+import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY); // Poné tu API Key en tu .env
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   const { email } = await req.json();

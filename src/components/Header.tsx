@@ -2,14 +2,17 @@
 
 import Logo from "@/components/Logo";
 import clsx from "clsx";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaHome, FaLightbulb, FaTractor } from "react-icons/fa";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { FaHome, FaTractor } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
+import { PiUserLight } from "react-icons/pi";
 
 export default function Header() {
   const { data: session } = useSession();
+  const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -32,6 +35,13 @@ export default function Header() {
     }, 150);
   };
 
+  const handleCloseMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleSignOut = async () => {
+    const confirmed = confirm("¿Estás seguro que querés cerrar sesión?");
+    if (confirmed) await signOut({ callbackUrl: "/" });
+  };
+
   return (
     <header
       className={clsx(
@@ -42,7 +52,7 @@ export default function Header() {
       <div className="flex justify-between items-center px-4 md:px-8">
         <Logo />
 
-        {/* Botón hamburguesa (solo en mobile) */}
+        {/* Botón Hamburguesa */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 relative focus:outline-none"
@@ -64,146 +74,150 @@ export default function Header() {
           />
         </button>
 
-        {/* Menú escritorio */}
-        <nav className="hidden md:flex space-x-6 items-center relative">
-          <Link href="/" className="hover:text-green-300 transition">
-            Inicio
-          </Link>
-
-          <div
-            className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <div className="cursor-pointer hover:text-green-300 transition">
-              Productos y Servicios
-            </div>
-
-            {isDropdownOpen && (
-              <div className="absolute left-0 mt-3 w-80 bg-black/80 text-white rounded-xl shadow-xl border border-white/10 z-50 p-4 space-y-3">
-                <Link
-                  href="/hogar"
-                  className="flex items-start gap-4 hover:bg-white/10 p-3 rounded transition"
-                >
-                  <FaHome className="text-xl mt-1 text-green-300" />
-                  <div>
-                    <div className="font-semibold">Para el Hogar</div>
-                    <div className="text-sm text-white/90">
-                      Soluciones tecnológicas para tu casa.
-                    </div>
-                  </div>
-                </Link>
-
-                
-
-                <Link
-                  href="/agro"
-                  className="flex items-start gap-4 hover:bg-white/10 p-3 rounded transition"
-                >
-                  <FaTractor className="text-xl mt-1 text-green-400" />
-                  <div>
-                    <div className="font-semibold">Para el Agro</div>
-                    <div className="text-sm text-white/90">
-                      Innovación al servicio del campo.
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <Link href="/contacto" className="hover:text-green-300 transition">
-            Contacto
-          </Link>
-        </nav>
-
-        {/* Login / Logout en escritorio */}
-        <div className="hidden md:flex items-center space-x-4">
-          {session?.user ? (
-            <>
-              <span className="text-sm">
-                Hola, {session.user.name || session.user.email}
-              </span>
-              <form action="/api/auth/signout" method="post">
-                <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1.5 rounded-full transition shadow">
-                  <FiLogOut className="text-lg" />
-                  Cerrar sesión
-                </button>
-              </form>
-            </>
-          ) : (
+        {/* Menú Escritorio */}
+        <div className="hidden md:flex items-center gap-6">
+          <nav className="flex items-center gap-8 uppercase text-sm font-normal text-[#00FF99] pr-6">
             <Link
-              href="/login"
-              className="flex items-center gap-2 text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-full transition shadow"
+              href="/"
+              className="underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
             >
-              <FiLogIn className="text-lg" />
-              Iniciar sesión
+              Inicio
             </Link>
-          )}
-        </div>
-      </div>
-
-      {/* Menú mobile */}
-      {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-black text-white flex flex-col items-start p-6 space-y-4 z-40 md:hidden shadow-lg border-t border-white/10">
-          <Link
-            href="/"
-            className="hover:text-green-300 transition w-full"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Inicio
-          </Link>
-
-          <div className="w-full">
             <div
-              className="cursor-pointer hover:text-green-300 transition w-full"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="relative underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition cursor-pointer"
             >
               Productos y Servicios
+              {isDropdownOpen && (
+                <div className="absolute left-0 mt-3 w-80 bg-black/80 text-white rounded-xl shadow-xl border border-white/10 z-50 p-4 space-y-3">
+                  <Link
+                    href="/hogar"
+                    className="flex items-start gap-4 hover:bg-white/10 p-3 rounded transition"
+                  >
+                    <FaHome className="text-xl mt-1 text-green-300" />
+                    <div>
+                      <div className="font-semibold">Para el Hogar</div>
+                      <div className="text-sm text-white/90">
+                        Soluciones tecnológicas para tu casa.
+                      </div>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/agro"
+                    className="flex items-start gap-4 hover:bg-white/10 p-3 rounded transition"
+                  >
+                    <FaTractor className="text-xl mt-1 text-green-400" />
+                    <div>
+                      <div className="font-semibold">Para el Agro</div>
+                      <div className="text-sm text-white/90">
+                        Innovación al servicio del campo.
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              )}
             </div>
-
-            {isDropdownOpen && (
-              <div className="flex flex-col pl-4 pt-2 space-y-2">
-                <Link
-                  href="/hogar"
-                  className="hover:text-green-300 transition"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Para el Hogar
-                </Link>
-                <Link
-                  href="/agro"
-                  className="hover:text-green-300 transition"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Para el Agro
-                </Link>
-              </div>
+            <Link
+              href="/contacto"
+              className="underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
+            >
+              Contacto
+            </Link>
+            {session?.user && (
+              <Link
+                href="/perfil"
+                className="underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
+              >
+                Mi perfil
+              </Link>
             )}
-          </div>
+          </nav>
 
-          <Link
-            href="/contacto"
-            className="hover:text-green-300 transition w-full"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Contacto
-          </Link>
-
-          {session?.user ? (
-            <form action="/api/auth/signout" method="post" className="w-full">
-              <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded-full w-full justify-center mt-4">
+          <div className="flex items-center">
+            <div className="h-6 border-l border-[#00FF99] mx-4"></div>
+            {session?.user ? (
+              <button
+                onClick={handleSignOut}
+                className="flex items-center gap-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white text-sm px-4 py-1.5 rounded transition uppercase"
+              >
                 <FiLogOut className="text-lg" />
                 Cerrar sesión
               </button>
-            </form>
+            ) : (
+              <Link
+                href="/login"
+                className="flex items-center gap-2 border border-[#00FF99] text-[#00FF99] hover:bg-white/10 hover:drop-shadow-[0_0_6px_#00FF99] text-sm px-4 py-1.5 rounded transition uppercase"
+              >
+                <PiUserLight className="text-lg" />
+                Iniciar sesión
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Menú Móvil */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-black/95 text-[#00FF99] px-6 py-6 text-sm font-normal uppercase z-40">
+          <Link
+            href="/"
+            onClick={handleCloseMobileMenu}
+            className="block underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
+          >
+            Inicio
+          </Link>
+          <div className="space-y-2">
+            <div className="underline">Productos y Servicios</div>
+            <Link
+              href="/hogar"
+              onClick={handleCloseMobileMenu}
+              className="block ml-4 text-white hover:text-[#00FF99] transition"
+            >
+              • Para el Hogar
+            </Link>
+            <Link
+              href="/agro"
+              onClick={handleCloseMobileMenu}
+              className="block ml-4 text-white hover:text-[#00FF99] transition"
+            >
+              • Para el Agro
+            </Link>
+          </div>
+          <Link
+            href="/contacto"
+            onClick={handleCloseMobileMenu}
+            className="block underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
+          >
+            Contacto
+          </Link>
+          {session?.user && (
+            <Link
+              href="/perfil"
+              onClick={handleCloseMobileMenu}
+              className="block underline hover:text-white hover:drop-shadow-[0_0_6px_#00FF99] transition"
+            >
+              Mi perfil
+            </Link>
+          )}
+          {session?.user ? (
+            <button
+              onClick={() => {
+                handleCloseMobileMenu();
+                handleSignOut();
+              }}
+              className="mt-4 flex items-center gap-2 border border-red-600 text-red-600 hover:bg-red-600 hover:text-white text-sm px-4 py-1.5 rounded transition uppercase"
+            >
+              <FiLogOut className="text-lg" />
+              Cerrar sesión
+            </button>
           ) : (
             <Link
               href="/login"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-2 rounded-full w-full justify-center mt-4"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={handleCloseMobileMenu}
+              className="flex items-center gap-2 border border-[#00FF99] text-[#00FF99] hover:bg-white/10 hover:drop-shadow-[0_0_6px_#00FF99] text-sm px-4 py-1.5 rounded transition uppercase"
             >
-              <FiLogIn className="text-lg" />
+              <PiUserLight className="text-lg" />
               Iniciar sesión
             </Link>
           )}

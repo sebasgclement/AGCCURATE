@@ -1,6 +1,6 @@
-import Image from "next/image";
 import AcercaDeNosotros from "@/app/components/AcercaDeNosotros";
 import OpinionesClientes from "@/app/components/OpinionesClientes";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -35,7 +35,7 @@ export default function Home() {
             ATE
           </h1>
           <p className="mt-4 text-2xl md:text-3xl font-light text-white">
-            Tecnología que cultiva el {" "}
+            Tecnología que cultiva el{" "}
             <span className="font-bold text-green-400">futuro</span>
           </p>
         </div>
@@ -56,7 +56,11 @@ export default function Home() {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </a>
         </div>
@@ -71,7 +75,10 @@ export default function Home() {
       <section id="pausa" className="relative z-0 h-98 w-full" />
 
       {/* Sección Opiniones de Clientes */}
-      <section id="opiniones" className="relative z-10 bg-white bg-opacity-90 py-20">
+      <section
+        id="opiniones"
+        className="relative z-10 bg-white bg-opacity-90 py-20"
+      >
         <OpinionesClientes />
       </section>
     </div>
