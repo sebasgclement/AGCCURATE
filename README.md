@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌱 AGCCURATE
 
-## Getting Started
+AGCCURATE es una plataforma web desarrollada con **Next.js 14**, **Prisma ORM** y **Tailwind CSS**, que permite a los usuarios gestionar su perfil, editar información personal y restablecer su contraseña de manera segura. Está orientada a la demostración de conocimientos en desarrollo Full Stack con enfoque moderno y buenas prácticas.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Tecnologías utilizadas
+
+- [Next.js 14](https://nextjs.org/) – Framework React fullstack
+- [TypeScript](https://www.typescriptlang.org/) – Tipado estático para JS
+- [Prisma](https://www.prisma.io/) – ORM para la gestión de la base de datos (SQLite)
+- [Tailwind CSS](https://tailwindcss.com/) – Estilado moderno y utilitario
+- [NextAuth](https://next-auth.js.org/) – Autenticación con Google y credenciales
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js) – Encriptación de contraseñas
+- [Resend](https://resend.com/) – Envío de correos transaccionales (reset de contraseña)
+- [UUID](https://www.npmjs.com/package/uuid) – Generación de identificadores únicos
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+agccurate/
+│
+├── app/
+│   ├── api/                        # Rutas del backend (API Routes)
+│   │   ├── auth/                   # Lógica de autenticación con NextAuth
+│   │   ├── perfil/route.ts         # GET y PUT de perfil del usuario
+│   │   ├── registro/route.ts       # Registro de nuevos usuarios
+│   │   ├── reset-password/         # Flujo de recuperación de contraseña
+│   │   └── upload/route.ts         # Subida de imágenes de perfil
+│   ├── perfil/page.tsx            # Página del perfil con formulario y modo vista
+│   └── ...                        # Otras páginas
+│
+├── lib/
+│   ├── prisma.ts                  # Conexión global al ORM Prisma
+│   ├── mail.ts                    # Servicio de envío de email con Resend
+│   └── utils.ts                   # Función `cn` para combinar clases CSS
+│
+├── public/uploads/               # Imágenes de perfil subidas por los usuarios
+├── prisma/
+│   └── schema.prisma              # Definición del modelo de datos
+└── README.md                      # Este archivo
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 👤 Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Registro de usuarios con validación de duplicados
+- Login con credenciales o Google (NextAuth)
+- Edición del perfil con:
+  - Nombre, teléfono, domicilio, ciudad, provincia, país
+  - Fecha de nacimiento (con selector)
+  - Imagen de perfil (subida local)
+- Visualización del perfil en modo tipo CV
+- Recuperación de contraseña vía email (Resend)
+- Subida de archivos segura con `uuid` y validaciones
+- Protección de rutas mediante sesiones (`getServerSession`)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Seguridad
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Contraseñas encriptadas con `bcryptjs`
+- Tokens de recuperación únicos y con vencimiento
+- Uso de `getServerSession()` para proteger rutas API
+- Datos sensibles ocultos en variables de entorno (`.env.local`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🧪 Cómo correr el proyecto localmente
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clonar el repositorio:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   git clone https://github.com/tu-usuario/agccurate.git
+   cd agccurate
+   ```
+
+2. Instalar dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Configurar variables de entorno:
+   Crear un archivo `.env.local` con:
+
+   ```env
+   DATABASE_URL="file:./dev.db"
+   RESEND_API_KEY="tu-clave"
+   NEXT_PUBLIC_APP_URL="http://localhost:3000"
+   GOOGLE_CLIENT_ID="..."
+   GOOGLE_CLIENT_SECRET="..."
+   NEXTAUTH_SECRET="..."
+   ```
+
+4. Ejecutar migraciones:
+
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+
+5. Iniciar el servidor:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🧑‍💻 Desarrolladores
+
+**Sebastián Clement** **Tobías Rojas**
+
+- sebasclement.sc@gmail.com
+- tobiasrojas057@gmail.com
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado como parte de una entrega de examen. Uso libre con fines educativos.
